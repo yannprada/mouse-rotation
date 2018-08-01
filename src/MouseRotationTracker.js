@@ -22,6 +22,8 @@ class MouseRotationTracker {
 
   handleTouch(event) {
     if (event.touches.length) {
+      event.preventDefault();
+      event.stopPropagation();
       let touch = event.touches[0];
       event.x = touch.pageX - event.target.offsetLeft;
       event.y = touch.pageY - event.target.offsetTop;
