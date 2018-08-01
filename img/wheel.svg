@@ -1,0 +1,22 @@
+<svg width="250" height="250" xmlns="http://www.w3.org/2000/svg">
+
+ <g fill="none">
+  <title>background</title>
+  <rect height="250" width="250" y="0" x="0"/>
+ </g>
+ <g stroke-width="5" stroke="#000" fill="none">
+  <title>ellipse</title>
+  <ellipse ry="95" rx="95" cy="125" cx="125"/>
+ </g>
+ <g stroke-width="3" stroke="#000" fill="none">
+  <title>lines</title>
+  <line y2="225" x2="125" y1="25" x1="125"/>
+  <line transform="rotate(90 125,125)" y2="225" x2="125" y1="25" x1="125"/>
+  <line transform="rotate(45 125,125)" y2="225" x2="125" y1="25" x1="125"/>
+  <line transform="rotate(135 125,125)" y2="225" x2="125" y1="25" x1="125"/>
+ </g>
+ <g stroke="none" fill="#f00">
+  <title>red dot</title>
+  <ellipse rx="5" ry="5" cx="220" cy="125"/>
+ </g>
+</svg>
