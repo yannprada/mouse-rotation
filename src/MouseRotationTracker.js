@@ -8,39 +8,56 @@ class MouseRotationTracker {
     }
     this.angles = [];
     this.TAU = 2 * Math.PI;
-    this.element.onmousemove = this.handleMouseMove.bind(this);
-    this.element.onmouseout = this.handleMouseOut.bind(this);
+
+    let handleTouch = this.handleTouch.bind(this);
+    let handleMove = this.handleMove.bind(this);
+    let handleOut = this.handleOut.bind(this);
+    this.element.onmousemove = handleMove;
+    this.element.onmouseout = handleOut;
+    this.element.addEventListener('touchstart', handleTouch, false);
+    this.element.addEventListener('touchmove', handleTouch, false);
+    this.element.addEventListener('touchend', handleOut, false);
+    this.element.addEventListener('touchcancel', handleOut, false);
   }
-  
-  handleMouseMove(event) {
+
+  handleTouch(event) {
+    if (event.touches.length) {
+      let touch = event.touches[0];
+      event.x = touch.pageX - event.target.offsetLeft;
+      event.y = touch.pageY - event.target.offsetTop;
+      this.handleMove(event);
+    }
+  }
+
+  handleMove(event) {
     let angle = this.getAngle(event);
     this.angles.push(angle);
-    
+
     this.element.dispatchEvent(new CustomEvent('mouseRotation', { detail: {
       position: this.getPosition(event),
       angle: angle,
       angleDelta: this.getAnglesDelta(),
     }}));
   }
-  
-  handleMouseOut(event) {
+
+  handleOut(event) {
     this.angles = [];
   }
-  
+
   getPosition(event) {
     return { x: event.x - this.center.x,
              y: event.y - this.center.y }
   }
-  
+
   getAngle(event) {
     let position = this.getPosition(event);
     let angle = Math.atan2(position.y, position.x);
     if (position.y < 0) {
       angle += this.TAU;
     }
-    return angle; 
+    return angle;
   }
-  
+
   getAnglesDelta() {
     let l = this.angles.length;
     if (l < 2) { return 0 }

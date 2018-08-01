@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   trackMouseRotation(wheel, (event) => {
     rotator.applyForce(event.detail.angleDelta);
-    updateValue('mouseX', event.detail.position.x);
-    updateValue('mouseY', event.detail.position.y);
+    updateAndRound('mouseX', event.detail.position.x);
+    updateAndRound('mouseY', event.detail.position.y);
     updateAndRound('mouseAngle', event.detail.angle);
     updateAndRound('mouseAngleDelta', event.detail.angleDelta);
   });
