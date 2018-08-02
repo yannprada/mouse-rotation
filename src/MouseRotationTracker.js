@@ -69,7 +69,7 @@ class MouseRotationTracker {
     let delta = this.angles[l - 1] - this.angles[l - 2];
     if (isNaN(delta)) { return 0 }
     if (delta < -Math.PI) { return this.TAU + delta }
-    if (delta > Math.PI) { return this.TAU - delta }
+    if (delta > Math.PI) { return (this.TAU - delta) * -1 }
     return delta;
   }
 }
