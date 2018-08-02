@@ -8,18 +8,29 @@ document.addEventListener("DOMContentLoaded", () => {
     element.oninput = (event) => rotator[event.target.name] = event.target.value;
   });
 
-  elId('selectWheel').onchange = (event) => elId('wheel').src = `img/${event.target.value}`;
+  elId('selectWheel').onchange = (event) => {
+    elId('wheel').src = `img/${event.target.value}`;
+  }
 
   const updateValue = (id, val) => elId(id).textContent = val;
   const round = (val) => Math.round(val * 100) / 100;
   const updateAndRound = (id, val) => updateValue(id, round(val));
 
   trackMouseRotation(wheel, (event) => {
-    rotator.applyForce(event.detail.angleDelta);
-    updateAndRound('mouseX', event.detail.position.x);
-    updateAndRound('mouseY', event.detail.position.y);
-    updateAndRound('mouseAngle', event.detail.angle);
-    updateAndRound('mouseAngleDelta', event.detail.angleDelta);
+    cwControl = document.querySelector('input.mouseControl[value=CW]');
+    ccwControl = document.querySelector('input.mouseControl[value=CCW]');
+    if (cwControl.checked && event.detail.clockwise ||
+        ccwControl.checked && !event.detail.clockwise) {
+      rotator.applyForce(event.detail.angleDelta);
+      updateAndRound('mouseX', event.detail.position.x);
+      updateAndRound('mouseY', event.detail.position.y);
+      updateAndRound('mouseAngle', event.detail.angle);
+      updateAndRound('mouseAngleDelta', event.detail.angleDelta);
+      updateValue(
+        'mouseDirection',
+        event.detail.clockwise ? 'CW' : 'CCW'
+      );
+    }
   });
 
   wheel.addEventListener('elementUpdated', (event) => {

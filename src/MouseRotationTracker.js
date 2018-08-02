@@ -33,13 +33,16 @@ class MouseRotationTracker {
 
   handleMove(event) {
     let angle = this.getAngle(event);
+    let position = this.getPosition(event);
     this.angles.push(angle);
+    let angleDelta = this.getAnglesDelta();
+    let clockwise = angleDelta > 0;
 
-    this.element.dispatchEvent(new CustomEvent('mouseRotation', { detail: {
-      position: this.getPosition(event),
-      angle: angle,
-      angleDelta: this.getAnglesDelta(),
-    }}));
+    if (angleDelta != 0) {
+      this.element.dispatchEvent(new CustomEvent('mouseRotation', {
+        detail: { position, angle, angleDelta, clockwise }
+      }));
+    }
   }
 
   handleOut(event) {
