@@ -17,10 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateAndRound = (id, val) => updateValue(id, round(val));
 
   trackMouseRotation(wheel, (event) => {
-    cwControl = document.querySelector('input.mouseControl[value=CW]');
-    ccwControl = document.querySelector('input.mouseControl[value=CCW]');
-    if (cwControl.checked && event.detail.clockwise ||
-        ccwControl.checked && !event.detail.clockwise) {
+    if (elId('cwMouseControl').checked && event.detail.clockwise ||
+        elId('ccwMouseControl').checked && !event.detail.clockwise) {
       rotator.applyForce(event.detail.angleDelta);
       updateAndRound('mouseX', event.detail.position.x);
       updateAndRound('mouseY', event.detail.position.y);
